@@ -1,6 +1,6 @@
 package lessons;
 
-public class lesson5 {
+public class Lesson5 {
     static int tcNumber = 1;
 
     //Вспомогательные методы для печати отчета тестирования

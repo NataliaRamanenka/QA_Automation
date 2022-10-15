@@ -21,10 +21,18 @@ public class HW6 {
         System.out.println("\t ---> \t" + value);
     }
 
-    public static void printDoubleNumber (double start, double end, double step) {
-        if ((start > end && step < 0) || (start < end && step > 0)) {
-            for (double i = start; i <= end; i = i + step) {
-                System.out.print(i + ", ");
+    public static void printSequence(double start, double end, double step) {
+        if (step != 0) {
+            if (start >= end && step < 0) {
+                for (double i = start; i >= end; i += step) {
+                    System.out.print(i + ", ");
+                }
+            } else if (start <= end && step > 0){
+                for (double i = start; i <= end; i += step) {
+                    System.out.print(i + ", ");
+                }
+            } else {
+                System.out.print("Введите корректный шаг");
             }
         } else {
             System.out.print("Внимание!Зацикливание!");
@@ -33,9 +41,8 @@ public class HW6 {
     }
 
     public static void printAlphabet(char n, char m) {
-        if ((((int) n >= 65 && (int) n <= 90) || ((int) n >= 97 && (int) n <= 122))
-                && (((int) m >= 65 && (int) m <= 90) || ((int) m >= 97 && (int) m <= 122)) && ((int) m != (int) n)) {
-            if (m > n) {
+        if ((n >= 65 && n <= 90 && m >= 65 && m <= 90) || (n >= 97 && n <= 122 && m >= 97 && m <= 122)) {
+            if (m >= n) {
                 for (char i = n; i <= m; i++) {
                     System.out.print(i + ", ");
                 }
@@ -46,20 +53,41 @@ public class HW6 {
                 }
                 System.out.println();
             }
-        } else {
-            System.out.println("Введите разные английские буквы");
         }
     }
 
+//    public static void printSequenceOfEveNumbers (int length) {
+//        if (length > 1) {
+//            int x = (length - 1) * 2;
+//            for (int i = 0; i <= x; i = i + 2) {
+//                System.out.print(i + ", ");
+//            }
+//            System.out.println();
+//        } else if (length == 1) {
+//            System.out.println("0");
+//        } else {
+//            System.out.println("Введите положительную длину последовательности");
+//        }
+//    }
+
+//    public static void printSequenceOfEveNumbers (int length) {
+//        if (length > 0) {
+//            for (int i = 0; length > 0; i += 2) {
+//                System.out.print(i + ", ");
+//                length--;
+//            }
+//            System.out.println();
+//        } else {
+//            System.out.println("Введите положительную длину последовательности");
+//        }
+//    }
+
     public static void printSequenceOfEveNumbers (int length) {
-        if (length > 1) {
-            int x = (length - 1) * 2;
-            for (int i = 0; i <= x; i = i + 2) {
+        if (length > 0) {
+            for (int i = 0; length > 0; i += 2, length--) {
                 System.out.print(i + ", ");
             }
             System.out.println();
-        } else if (length == 1) {
-            System.out.println("0");
         } else {
             System.out.println("Введите положительную длину последовательности");
         }
@@ -80,9 +108,13 @@ public class HW6 {
     }
 
     public static String generateAbsoluteValues (int n){
-        String s = "0";
+        String s = "0, ";
         for (int i = 1; i <= n; i++) {
-            s = s + ", " + i +  ", -" + i;
+            if (i < n) {
+                s = s + i + ", -" + i + ", ";
+            } else {
+                s = s + i + ", -" + i;
+            }
         }
 
         return s;
@@ -90,10 +122,14 @@ public class HW6 {
 
     public static void generateNumb18(double n, double m, int l){
         if (l > 0) {
-            for (double i = 1; i <= l; i++) {
-                System.out.print((int)(Math.random()* (m - n + 1) + n) + ", ");
-            }
-            System.out.println();
+                for (double i = 1; i <= l; i++) {
+                    if (i == l) {
+                        System.out.print((int) (Math.random() * (m - n + 1) + n));
+                    } else {
+                        System.out.print((int) (Math.random() * (m - n + 1) + n) + ", ");
+                    }
+                }
+                System.out.println();
         } else {
             System.out.println("неверная длина интервала");
         }
@@ -116,29 +152,55 @@ public class HW6 {
         }
     }
 
-    public static void generateLine (int start, int step, int length){
-        if ((length >= 1) && step != 0) {
-            int x ;
-            int y;
-            if (start % 2 == 1) {
-                x = start;
+//    public static void generateLine(int start, int step, int length) {
+//        if ((length >= 1) && step != 0) {
+//            int x;
+//            int y;
+//            if (start % 2 == 1) {
+//                x = start;
+//            } else {
+//                x = start + 1;
+//            }
+//            if (step % 2 == 0) {
+//                y = step;
+//            } else {
+//                y = 2 * step;
+//            }
+//            for (int i = x; i <= (x + (length - 1) * y); i = i + y) {
+//                System.out.print(i + ", ");
+//            }
+//            System.out.println();
+//        } else if (length == 0) {
+//            System.out.println("");
+//        } else if (length < 0) {
+//            System.out.println("Недопустимая длина числовой линии");
+//        } else {
+//            System.out.println("Зацикливание");
+//        }
+//    }
+    public static void generateLine(int start, int step, int length) {
+        int counter = 1;
+        if (length > 0 && step != 0) {
+            if(start % 2 != 0 && step % 2 != 0) {
+                for (int i = start; counter <= length; i += step){
+                    if (i % 2 != 0){
+                        if (counter == length){
+                            System.out.print(i);
+                        } else {
+                            System.out.print(i + ", ");
+                        }
+                        counter++;
+                    }
+                }
+                System.out.println();
             } else {
-                x = start + 1;
+                System.out.println("Все числа положительные");
             }
-            if (step % 2 == 0) {
-                y = step;
-            } else {
-                y = 2 * step;
-            }
-            for (int i = x; i <= (x + (length - 1) * y); i = i + y) {
-                System.out.print(i + ", ");
-            }
-            System.out.println();
-        } else if (length == 0){
-            System.out.println("");
-        } else if (length < 0){
+        } else if (length == 0) {
+            System.out.println("Длина последовательности 0");
+        } else if (length < 0) {
             System.out.println("Недопустимая длина числовой линии");
-        }else {
+        } else {
             System.out.println("Зацикливание");
         }
     }
@@ -158,85 +220,218 @@ public class HW6 {
         }
     }
 
-    public static void calculateEquation20(int n){
+//    public static void calculateEquation20(int n, int l){
+//        int y1 = 1;
+//        int y2 = 2;
+//        int yn = 0;
+//        if (n <= 0) {
+//            System.out.println("0");
+//        } else {
+//            for (int i = 1; i < (n + l); i++){
+//                yn = 2 * y2 + y1;
+//                if (i >= n){
+//                    System.out.println("y" + i + " = " + y1);
+//                }
+//                y1 = y2;
+//                y2 = yn;
+//            }
+//        }
+//    }
+
+    public static void calculateEquation20(int n, int l){
+        int y1 = 1;
+        int y2 = 2;
+        int yn = 0;
         if (n <= 0) {
             System.out.println("0");
         } else {
-            for (int i = 1; i <= n; i++){
-                if (i == 1) {
-                    System.out.println("y" + i + "= 1");
-                } else if (i == 2) {
-                    System.out.println("y" + i + "= 2");
-                } else {
-                    System.out.println("y" + i + "=" );
+            for (int i = 1; l > 0; i++){
+                yn = 2 * y2 + y1;
+                if (i >= n){
+                    System.out.println("y" + i + " = " + y1);
+                    l--;
                 }
+                y1 = y2;
+                y2 = yn;
             }
         }
     }
+    public static void calculateEquation22(double x){
+        if (x > 1.5) {
+            System.out.println("y = " + (2.5 * Math.pow(x,3) + 6 * Math.pow(x,2) - 30));
+        } else if (x < 0 ) {
+            System.out.println("y = " + x);
+        } else {
+            System.out.println("y = " + (x +1));
+        }
+    }
 
+//    public static void generatePositivePrimeNumbers (int n){
+//        for (int i = 2; i <= n; i++){
+//            if ((i % 2 == 0 && i != 2)
+//                    || (i % 3 == 0 && i != 3)
+//                    || (i % 5 == 0 && i != 5)
+//                    || (i % 7 == 0 && i != 7)
+//                    || (i % 9 == 0 && i != 9)){
+//                System.out.print("");
+//            } else {
+//                System.out.print(i + ", ");
+//            }
+//        }
+//        System.out.println();
+//    }
 
-    public static void generatePositivePrimeNumbers (int n){
-        for (int i = 2; i <= n; i++){
-            if ((i % 2 == 0 && i != 2)
-                    || (i % 3 == 0 && i != 3)
-                    || (i % 5 == 0 && i != 5)
-                    || (i % 7 == 0 && i != 7)
-                    || (i % 9 == 0 && i != 9)){
-                System.out.print("");
-            } else {
+    public static void generatePositivePrimeNumbers (int n) {
+        for (int i = 2; i < n; i++) {
+            int count = 0;
+            for (int j = 1; j <= i; j++) {
+                if(i % j == 0) {
+                    count++;
+                }
+            }
+            if (count == 2) {
                 System.out.print(i + ", ");
             }
         }
         System.out.println();
     }
-    static String nameOfMonth;
-    static String nameOfDay;
-    public static String printDayMonth(String day, int month, int date1, int date2) {
+    public static String returnMonth(int number) {
+        if (number > 0 && number < 13) {
+            if (number == 1) {
 
-        for (int i = date1; i <= date2; i++) {
+                return "Jan";
+            } else if (number == 2) {
 
-            if (month == 1) {
-                nameOfMonth = "Jan";
-            } else if(month == 2) {
-                nameOfMonth = "Feb";
-            } else if(month == 3) {
-                nameOfMonth = "Mar";
-            }else if(month == 4) {
-                nameOfMonth = "Apr";
-            }else if(month == 5) {
-                nameOfMonth = "May";
-            }else if(month == 6) {
-                nameOfMonth = "Jun";
-            }else if(month == 7) {
-                nameOfMonth = "Jul";
-            }else if(month == 8) {
-                nameOfMonth = "Aug";
-            }else if(month == 9) {
-                nameOfMonth = "Sep";
-            }else if(month == 10) {
-                nameOfMonth = "Oct";
-            }else if(month == 11) {
-                nameOfMonth = "Nov";
-            }else if(month == 12) {
-                nameOfMonth = "Dec";
-            } else {
-                System.out.println("Неправильный месяц");
+                return "Feb";
+            } else if (number == 3) {
+
+                return "Mar";
+            } else if (number == 4) {
+
+                return "Apr";
+            } else if (number == 5) {
+
+                return "May";
+            } else if (number == 6) {
+
+                return "Jun";
+            } else if (number == 7) {
+
+                return "Jul";
+            } else if (number == 8) {
+
+                return "Aug";
+            } else if (number == 9) {
+
+                return "Sep";
+            } else if (number == 10) {
+
+                return "Oct";
+            } else if (number == 11) {
+
+                return "Nov";
+            } else if (number == 12) {
+
+                return "Dec";
             }
-
-                System.out.println(nameOfDay + "," + nameOfMonth + " 0" + i);
         }
 
-        return "";
+        return "Error";
     }
 
-//         * Sun, Oct 02
-//            * Mon, Oct 03
-//            * Tue, Oct 04
-//            * Wed, Oct 05
-//            * Thu, Oct 06
-//            * Fri, Oct 07
-//            * Sat, Oct 08
-//            * Sun, Oct 09
+    public static String returnDayOfTheWeek(int number) {
+        if (number > 0 && number < 8) {
+            if (number == 1) {
+
+                return "Mon";
+            } else if (number == 2) {
+
+                return "Tue";
+            } else if (number == 3) {
+
+                return "Wed";
+            } else if (number == 4) {
+
+                return "Thu";
+            } else if (number == 5) {
+
+                return "Fri";
+            } else if (number == 6) {
+
+                return "Sat";
+            } else {
+
+                return "Sun";
+            }
+        }
+
+        return "Error";
+    }
+
+    public static int returnDayOfTheWeek(String day) {
+        if (day.equals("Mon")) {
+            return 1;
+        } else if (day.equals("Tue")) {
+            return 2;
+        } else if (day.equals("Wed")) {
+            return 3;
+        } else if (day.equals("Thu")) {
+            return 4;
+        } else if (day.equals("Fri")) {
+            return 5;
+        } else if (day.equals("Sat")) {
+            return 6;
+        } else if (day.equals("Sun")) {
+            return 7;
+        }
+
+        return 0;
+    }
+
+    public static int returnDate(int date) {
+        if (date < 10) {
+            String number = String.format("%03d", date);;
+
+            return Integer.valueOf(number);
+        } else {
+            return date;
+        }
+    }
+
+
+    public static void printEightDaysFromDate(String day, int month, int date) {
+        int l = 8;
+        if (returnDayOfTheWeek(day) == 0 || returnMonth(month).equals("Error") || month <= 0 || date <= 0) {
+            System.out.println("Please enter correct data.");
+        } else if (month <= 7 && month % 2 == 1 && date > 31) {
+            System.out.println("Please enter correct date.");
+        } else if (month >= 8 && month <= 12 && month % 2 == 0 && date > 31) {
+            System.out.println("Please enter correct date.");
+        } else if ((month == 4 || month == 6 ||  month == 9 || month == 11) && date > 30) {
+            System.out.println("Please enter correct date.");
+        }
+        else if (month == 2 && date > 28) {
+            System.out.println("Please enter correct date.");
+        } else {
+            for (int i = returnDayOfTheWeek(day); i <= 7 && l > 0; i++, date++, l--) {
+                if (i != 7) {
+                    if ((month <= 7 && month % 2 != 0 && returnDate(date) >= 32)
+                            || ((month == 9 || month == 11) && returnDate(date) >= 31)
+                            || ((month == 4 || month == 6) && returnDate(date) >= 31)
+                            || (month >= 8 && month <= 12 && month % 2 == 0 && returnDate(date) >= 32)
+                            || (month == 2 && returnDate(date) >= 29)) {
+                        date = 1;
+                        month +=1;
+                    }
+
+                    System.out.println(returnDayOfTheWeek(i) + ", " + returnMonth(month) + " " + returnDate(date));
+                } else {
+                    System.out.println(returnDayOfTheWeek(i) + ", " + returnMonth(month) + " " + returnDate(date));
+                    i = 0;
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) {
         /* Задание 1
@@ -270,7 +465,21 @@ public class HW6 {
          * Распечатать последовательность чисел, кратных 7, в промежутке (327, 300)
          */
         printTask();
-        for (int i = 329; i >= 300; i = i - 7) {
+// нерациональный вариант
+//        for (int i = 326; i > 300; i++) {
+//            if (i % 7 == 0) {
+//                System.out.println(i);
+//            }
+//        }
+// рациональный, но монуальный вариант
+//        for (int i = 329; i > 300; i = i - 7) {
+//            System.out.print(i + ", ");
+//        }
+//        System.out.println();
+        int start = 327 - 1;
+        int end = 300 +1;
+        int first = start - start % 7;
+        for (int i = first; i >= end; i -= 7) {
             System.out.print(i + ", ");
         }
         System.out.println();
@@ -279,7 +488,13 @@ public class HW6 {
          * Распечатать последовательность чисел в промежутке [12, 13] с шагом 0.1
          */
         printTask();
+         for (double i = 12; i <= 13; i = i + 0.1) {
+            i = Math.round(i * 100) / 100.0;
+            System.out.print(i + ", ");
+        }
+        System.out.println();
         for (double i = 12; i <= 13; i = i + 0.1) {
+            i = Math.ceil(i * 100) / 100;
             System.out.print(i + ", ");
         }
         System.out.println();
@@ -292,6 +507,14 @@ public class HW6 {
             System.out.print(i + ", ");
         }
         System.out.println();
+        // более универсальный метод
+        start = 215;
+        end = 237;
+        first = start + start % 2;
+        for (int i = first; i <= end; i += 2) {
+            System.out.print(i + ", ");
+        }
+        System.out.println();
 
         /* Задание 7
          * Распечатать последовательность чисел, кратных 7, в промежутке от 7 исключительно до 14 исключительно.
@@ -300,15 +523,36 @@ public class HW6 {
 //        for (int i = 14; i < 14; i = i + 7){             !!!!!!!!зацикливание!!!!!!
 //            System.out.print(i + ", ");
 //        }
-        System.out.println("!!!!!!зацикливание!!!!!!");
+        start = 7 + 1;
+        end = 14 - 1;
+        int step = 7;
+        first = start + step - start % step;
+        if (first < end) {
+            for (int i = first; i <= end; i += step) {
+                System.out.print(i + ", ");
+            }
+        } else {
+            System.out.println("!!!!!!зацикливание!!!!!!");
+        }
 
         /* Задание 8
          * Распечатать последовательность которая начинается с минимального значения типа данных short и
          * заканчивается максимальным значением short. Числа в последовательности должны быть кратны 15001.
          */
         printTask();
-        for (int i = -30002; i < 32767; i = i + 15001) {
-            System.out.print(i + ", ");
+        start = Short.MIN_VALUE;
+        end = Short.MAX_VALUE;
+        step = 15001;
+        first = start - (start % step);
+        if (first >= start) {
+            for (int i = first; i < end; i += step) {
+                System.out.print(i + ", ");
+            }
+        } else {
+            first = start + (step- start % step);
+            for (int i = first; i < end; i += step) {
+                System.out.print(i + ", ");
+            }
         }
         System.out.println();
 
@@ -328,7 +572,7 @@ public class HW6 {
             } else if (i % 11 == 0) {
                 System.out.print("\033[31m" + i + ", " + "\033[0m");
             } else if (i % 12 == 0) {
-                System.out.println("\033[34m" + i + ", " + "\033[0m");
+                System.out.print("\033[34m" + i + ", " + "\033[0m");
             } else {
                 System.out.print(i + ", " + "\033[0m");
             }
@@ -340,8 +584,9 @@ public class HW6 {
      * десятичных  чисел, начиная с числа start, с шагом step. Точка выхода из цикла - число end.
      */
     printTask();
-       printDoubleNumber(1.6,5,0.5);
-       printDoubleNumber(-8,8,-1);
+       printSequence(1.6,5,0.5);
+       printSequence(-8,8,-1);
+       printSequence(8,-8,-1);
 
     /* Задание 11
      * Написать метод, который принимает на вход параметры n и m типа char, и выводит на печать последовательность
@@ -351,6 +596,7 @@ public class HW6 {
         printAlphabet('f','w');
         printAlphabet('z','f');
         printAlphabet('л', 's' );
+        printAlphabet('D', 'd' );
 
     /* Задание 12
      * Написать метод, который принимает параметр l и печатает  последовательность четных чисел от нуля.
@@ -419,11 +665,15 @@ public class HW6 {
         printTask();
         int n = 25;
         for (int i = 0; i <= n; i++) {
-            if ((i % 3 == 0 && i % 5 == 0) || (i % 3 == 0) || (i % 5 == 0)){
-                System.out.print(i + ", ");
-            } else {
-                System.out.print("");
-            }
+                if ((i % 3 == 0) || (i % 5 == 0)) {
+                    if (i == n) {
+                        System.out.print(i);
+                    } else {
+                        System.out.print(i + ", ");
+                    }
+                } else {
+                    System.out.print("");
+                }
         }
         System.out.println();
 
@@ -459,6 +709,7 @@ public class HW6 {
         generateNumb18(2,4,6);
         generateNumb18(2,4,-1);
         generateNumb18(-3,8,20);
+        generateNumb18(3,-8,10);
 
     /* Задание 19
      * Сгенерируйте и распечатайте последовательность чисел, где для каждого положительного или отрицательного
@@ -471,12 +722,12 @@ public class HW6 {
         calculateEquation19(-1, 7);
 
 
-
     /* Задание 20
-     * Написать метод, который принимает параметры , n, и печатает последовательность чисел по формуле
+     * Написать метод, который принимает параметры l, n, и печатает последовательность чисел по формуле
      * Длина последовательности l.
      */
         printTask();
+        calculateEquation20(5,3);
 
     /* Задание 21
      * Сгенерируйте последовательность целых положительных  двузначных чисел,
@@ -484,10 +735,8 @@ public class HW6 {
      */
         printTask();
         for (int i = 10; i < 100; i++){
-            if (((i - 10 * (int)Math.floor(i / 10)) - (int)(i / 10)) <= 3){
+            if (Math.abs((i / 10) - (i % 10)) <= 3) {
                 System.out.print(i + ", ");
-            } else {
-                System.out.print("");
             }
         }
         System.out.println();
@@ -496,6 +745,9 @@ public class HW6 {
      * Написать метод, который вычислит значение функции:
      */
         printTask();
+        calculateEquation22(6);
+        calculateEquation22(0);
+        calculateEquation22(-3);
 
     /* Задание 23 /Задание 21
      * Написать метод, который генерирует последовательность простых положительных чисел и
@@ -520,7 +772,7 @@ public class HW6 {
      * Sun, Oct 09
      */
         printTask();
-        System.out.println(printDayMonth("Sun",10,2,9));
+        printEightDaysFromDate("Sun", 10, 2);
 
 }
 
