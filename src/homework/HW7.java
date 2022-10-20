@@ -29,14 +29,31 @@ public class HW7 {
     }
 
     public static int[] printNegOdds(int start, int end, int step) {
-        int j = 0;
-        int l = (int) Math.round((end - start) / (double) step);
-        int[] arrNegOdds = new int[l];
-        for (int i = (start + 1 - Math.abs(start % 2)); i < end; i += step, j++) {
-            arrNegOdds[j] = i;
+        if (step != 0) {
+            if (start < end && step > 0) {
+                int j = 0;
+                int l = (int) Math.round((end - start) / (double) step);
+                int[] arrNegOdds = new int[l];
+                for (int i = (start + 1 - Math.abs(start % 2)); i < end; i += step, j++) {
+                    arrNegOdds[j] = i;
+                }
+                System.out.println(Arrays.toString(arrNegOdds));
+
+                return arrNegOdds;
+            } else if (start > end && step < 0) {
+                int j = 0;
+                int l = (int) Math.round((end - start) / (double) step);
+                int[] arrNegOdds = new int[l];
+                for (int i = (start - 1 + Math.abs(start % 2)); i > end; i += step, j++) {
+                    arrNegOdds[j] = i;
+                }
+                System.out.println(Arrays.toString(arrNegOdds));
+
+                return arrNegOdds;
+            }
         }
-        System.out.println(Arrays.toString(arrNegOdds));
-        return arrNegOdds;
+
+        return new int[0];
     }
 
     public static void printSequence(double start, double end, double step) {
@@ -173,7 +190,7 @@ public class HW7 {
             case 7:
                 return "Sun";
         }
-                return "Error";
+        return "Error";
     }
 
     public static int returnMonth(String month) {
@@ -532,6 +549,11 @@ public class HW7 {
         int step1 = 2;
         printNegOdds(start1, end1, step1);
 
+        start1 = -100;
+        end1 = 120;
+        step1 = 2;
+        printNegOdds(start1, end1, step1);
+
         /* Задача 24. Создать массив из 10 случайных положительных целых чисел в промежутке от 100 до 200 включительно.
          */
         printTask();
@@ -663,16 +685,19 @@ public class HW7 {
         /* Задача 29. Вывести сумму всех четных чисел массива из задания 28.
          */
         printTask();
+        int sum = 0;
         for (int i = 0; i < randomTwoDArray.length; i++) {
             for (int j = 0; j < randomTwoDArray[i].length; j++) {
                 if (randomTwoDArray[i][j] % 2 == 0) {
                     System.out.print(randomTwoDArray[i][j] + "\t");
+                    sum = sum + randomTwoDArray[i][j];
                 } else {
                     System.out.print("\t");
                 }
             }
             System.out.println();
         }
+        System.out.println("sum = " + sum);
 
 
         /* Задача 30. Прочитать ссылку про оператор switch в документации, посмотреть видео,
@@ -682,7 +707,7 @@ public class HW7 {
          * Написать эту проверку в отдельном методе и подключить проверку в метод printEightDaysFromDate.
          */
         printTask();
-        printEightDaysFromDate("Mon",2, 27, 2020, 10);
+        printEightDaysFromDate("Mon", 2, 27, 2020, 10);
 
     }
 
@@ -700,10 +725,19 @@ public class HW7 {
 
         int numDays;
         switch (month) {
-            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
                 numDays = 31;
                 break;
-            case 4: case 6: case 9: case 11:
+            case 4:
+            case 6:
+            case 9:
+            case 11:
                 numDays = 30;
                 break;
             case 2:

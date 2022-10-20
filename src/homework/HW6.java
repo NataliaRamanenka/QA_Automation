@@ -564,13 +564,14 @@ public class HW6 {
          * \033[31m <your text goes here> \033[0m 	красный текст
          * \033[34m <your text goes here> \033[0m 	синий текст
          * \033[37m <your text goes here> \033[0m 	белый текст
+         * \x1B[34m почему-то не работает!!!
          */
         printTask();
         for (int i = -10; i <= 34; i++) {
             if (i == 0) {
-                System.out.print("ZERO, ");
+                System.out.print("\033[38;5;222m" + "\033[48;5;2m"  + "ZERO, "+ "\033[0m");
             } else if (i % 11 == 0) {
-                System.out.print("\033[31m" + i + ", " + "\033[0m");
+                System.out.print("\u001b[31m" + i + ", " + "\033[0m");
             } else if (i % 12 == 0) {
                 System.out.print("\033[34m" + i + ", " + "\033[0m");
             } else {
@@ -579,7 +580,7 @@ public class HW6 {
         }
         System.out.println();
 
-    /* Задание 10
+        /* Задание 10
      * Написать метод, который принимает на вход параметры start,  end, step, и печатает последовательность
      * десятичных  чисел, начиная с числа start, с шагом step. Точка выхода из цикла - число end.
      */
